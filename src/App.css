@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap');
+
+html{
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Funnel Display", sans-serif;
+  color: #F8F0FB;
+}
+
+section, .section-target {
+  scroll-margin-top: 100px;
+}
+
+.App{
+  background-color: #070707;
+}
+
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.31);
+  backdrop-filter: blur(10px);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.navbar {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 0.5rem 3rem;
+  z-index: 1000;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: transparent;
+}
+
+.perfil-container{
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 20em;
+}
+
+.perfil-container  img{
+  width: auto;
+  height: 8.5vh;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  filter: drop-shadow(0 0 10px rgb(98, 190, 193));
+  transition: transform 0.3s ease-in-out
+}
+.perfil-container img:hover{
+  transform: scale(1.1);
+}
+
+.texto-magnetico {
+  font-size: 3rem;
+  font-weight: bold;
+  position: relative;
+  color: #F8F0FB;
+  cursor: default;
+  user-select: none;
+  transform: translate(var(--move-x), var(--move-y));
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.texto-magnetico.ativo {
+  transition: transform 0.1s linear;
+}
+
+.texto-magnetico::after {
+  content: "Portfólio";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+          circle 50px at var(--x) var(--y),
+          #62bec1 0%,
+          #F8F0FB 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.texto-magnetico.ativo::after {
+  opacity: 1;
+}
+
+.nav {
+  list-style: none;
+  display : flex;
+}
+
+.nav-item  a{
+  margin-left: 2rem;
+  transition: color 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.nav-item a:hover {
+  cursor: pointer;
+  color: #62BEC1;
+  filter: drop-shadow(0 0 15px rgb(248, 240, 251));
+  transition: color 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.content {
+  display: flex;
+  background-image: radial-gradient(
+          ellipse at top,
+          #232ED1 10%,
+          transparent 80%,
+          #070707 100%
+  );
+  backdrop-filter: blur(10px);
+  background-color: #070707;
+  background-repeat: no-repeat;
+  padding-top: 15vh;
+  min-height: 100vh;
+}
+
+.hero-container{
+  padding: 0 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
+  margin: 0 auto;
+}
+
+.img-container {
+  margin: 0 5vw;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  transform: perspective(1000px) rotateX(var(--rX, 0deg)) rotateY(var(--rY, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+.img-container:not(:hover) {
+  transition: transform 0.5s ease-out;
+}
+
+.profile-image {
+  position: relative;
+  z-index: 10;
+  height: 50vh;
+  border-radius: 8rem;
+  object-fit: cover;
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  border-left: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+          inset 4px 4px 15px rgba(255, 255, 255, 0.3),
+          10px 10px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4) 0%,    /* Ponto de luz forte */
+          rgba(35, 46, 209, 0.1) 100%     /* Área de sombra sutil */
+  );
+  transform: translateZ(100px);
+  transition: transform 0.5s ease-in-out;
+}
+
+.decorative-square {
+  position: absolute;
+  z-index: 1;
+  border-radius: 35%;
+  backdrop-filter: blur(20px);
+  background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4) 0%,    /* Ponto de luz forte */
+          rgba(35, 46, 209, 0.1) 100%     /* Área de sombra sutil */
+  );
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  border-left: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+          inset 4px 4px 15px rgba(255, 255, 255, 0.3),
+          10px 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateZ(60px);
+  transition: transform 0.5s ease-in-out;
+}
+
+.big-square {
+  width: 240px;
+  height: 240px;
+  top: -40px;
+  left: -50px;
+  transform: rotate(-15deg) translateZ(50px);
+}
+
+.small-square {
+  width: 160px;
+  height: 160px;
+  bottom: -40px;
+  right: -60px;
+  transform: rotate(20deg) translateZ(50px);
+}
+
+.text-container {
+  margin-top: 10vh;
+  position: relative;
+  padding: 2.5rem;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+  border-radius:5rem;
+  top: -40px;
+  left: -50px;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: justify;
+
+  transition:
+          transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          box-shadow 0.3s ease-in-out;
+}
+
+.info-container {
+  cursor:default;
+}
+
+.text-container:hover {
+  transform: translate(var(--move-x, 0px), var(--move-y, 0px)) scale(1.02);
+  box-shadow:
+          inset 4px 4px 15px rgba(255, 255, 255, 0.4),
+          0 0 15px rgba(0, 212, 255, 0.5),
+          0 0 30px rgba(35, 46, 209, 0.4);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.text-container b {
+  color: #62bec1;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  background-color: #00d4ff;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.dynamic-text {
+  font-weight: bold;
+  color: #00d4ff;
+  filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5));
+}
