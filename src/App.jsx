@@ -98,6 +98,18 @@ function App() {
         );
     };
 
+    const skills = [
+        { name: "Java", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+        { name: "Spring", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+        { name: "Python", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+        { name: "JavaScript", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "React", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "SQL", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
+        { name: "Git", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+        { name: "HTML5", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS3", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+    ];
+
     return (
         <body className="App">
             <div>
@@ -139,11 +151,23 @@ function App() {
                                  onMouseEnter={() => setIsHovering(true)}
                                  onMouseLeave={handleMouseLeave}>
                                 <p>
-                                    Estudante de Bacharelado em Sistemas de Informação, sou apaixonado por transformar lógica em soluções reais. Atualmente, foco meus estudos no ecossistema <b>Java</b>, desenvolvendo desde aplicações de produtividade pessoal até sistemas complexos de gestão com <b>Spring Boot e Spring Security</b>. Tenho facilidade em aprender novas tecnologias e busco minha primeira oportunidade para aplicar conhecimentos em <b>desenvolvimento Backend e APIs REST</b> em um ambiente profissional desafiador.
+                                    Estudante de Bacharelado em Sistemas de Informação, sou apaixonado por transformar lógica em soluções reais. Atualmente, foco meus estudos no ecossistema <b>Java</b>, desenvolvendo desde aplicações de produtividade pessoal até sistemas complexos de gestão com <b>Spring Boot e Spring Security</b>
                                 </p>
                             </div>
                         </div>
-
+                    </div>
+                    <div className={'skills-container'}>
+                        <p className='skills-title'>Minhas Habilidades Técnicas</p>
+                        <div className="carousel-window">
+                            <div className="carousel-track">
+                                {[...skills, ...skills].map((skill, index) => (
+                                    <div className="skill-card" key={index}>
+                                        <img src={skill.img} alt={skill.name} />
+                                        <span>{skill.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </main>
 
