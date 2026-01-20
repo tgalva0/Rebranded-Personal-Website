@@ -2,6 +2,7 @@ import perfilNavbar from './assets/perfil-sem-fundo.png'
 import perfil from './assets/perfil.png'
 import {useEffect, useRef, useState} from "react";
 import './App.css'
+import * as contentful from "contentful";
 function App() {
     const [isHovering, setIsHovering] = useState(false);
     const textRef = useRef(null);
@@ -88,14 +89,13 @@ function App() {
 
         return (
             <span>
-      {/* Texto Fixo + Texto Dinâmico */}
                 <span style={{ color: '#F8F0FB' }}>Desenvolvedor </span>
-      <span className="dynamic-text" style={{ color: color }}>
-        {text}
-      </span>
-      <span className="cursor">&nbsp;</span>
-    </span>
-        );
+              <span className="dynamic-text" style={{ color: color }}>
+                {text}
+              </span>
+              <span className="cursor">&nbsp;</span>
+            </span>
+            );
     };
 
     const skills = [
@@ -109,6 +109,49 @@ function App() {
         { name: "HTML5", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
         { name: "CSS3", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
     ];
+
+    const client = contentful.createClient({
+        space: import.meta.env.VITE_SPACE_ID,
+        environment: 'master',
+        accessToken: import.meta.env.VITE_ACCESS_TOKEN
+    })
+
+    const getProjects = async () => {
+        const response = await client.getEntries({
+            content_type: 'sitePessoal',
+            order: '-sys.createdAt'
+        });
+
+        // Limpando os dados para facilitar o uso no componente
+        return response.items.map(item => ({
+            id: item.sys.id,
+            titulo: item.fields.titulo,
+            descricao: item.fields.descricao,
+            imagem: item.fields.imagem?.fields.file.url,
+            linkGithub: item.fields.linkGithub,
+            linkDeploy: item.fields.linkDeploy,
+            tags: item.fields.tags || []
+        }));
+    };
+
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        getProjects().then((data) => {
+            setProjects(data);
+        });
+    }, []);
+
+    const [emailCopied, setEmailCopied] = useState(false);
+
+    const handleCopyEmail = () => {
+        const myEmail = "tgalvaoferreira@gmail.com";
+
+        navigator.clipboard.writeText(myEmail);
+        setEmailCopied(true);
+
+        setTimeout(() => setEmailCopied(false), 3000);
+    };
 
     return (
         <body className="App">
@@ -124,8 +167,8 @@ function App() {
                     </div>
                     <ul className="nav">
                         <li className="nav-item"><a href={'#hero'}>Sobre Mim</a></li>
-                        <li className="nav-item"><a>Projetos</a></li>
-                        <li className="nav-item"><a>Contato</a></li>
+                        <li className="nav-item"><a href={'#projetos'}>Projetos</a></li>
+                        <li className="nav-item"><a href={'#contato'}>Contato</a></li>
                     </ul>
                 </header>
 
@@ -170,7 +213,85 @@ function App() {
                         </div>
                     </div>
                 </main>
+                <div id="projetos" className="projects-section">
+                    <h2 className="section-title">Meus Projetos</h2>
 
+                    <div className="projects-grid">
+                        {projects.map((proj) => (
+                            <div key={proj.id} className="project-card">
+                                <div className="project-img-box">
+                                    {proj.imagem && <img src={`https:${proj.imagem}`} alt={proj.titulo} />}
+                                </div>
+
+                                <div className="project-content">
+                                    <h3>{proj.titulo}</h3>
+
+                                    <div className="project-tags">
+                                        {proj.tags.map((tag, i) => (
+                                            <span key={i} className="tag">{tag}</span>
+                                        ))}
+                                    </div>
+
+                                    <p>{proj.descricao}</p>
+
+                                    <div className="project-links">
+                                        {proj.linkGithub && (
+                                            <a href={proj.linkGithub} target="_blank" rel="noreferrer" className="btn-project">
+                                                GitHub
+                                            </a>
+                                        )}
+                                        {proj.linkDeploy && (
+                                            <a href={proj.linkDeploy} target="_blank" rel="noreferrer" className="btn-project outline">
+                                                Demo
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div id="contato" className="contact-section">
+                    <div className="contact-content">
+                        <h2 className="section-title">Vamos Conversar?</h2>
+                        <p className="contact-text">
+                            Estou sempre aberto a novas oportunidades e desafios no mundo Java e Backend.
+                            Se você tem uma vaga, um projeto ou apenas quer trocar uma ideia, me chame!
+                        </p>
+
+                        <div className="social-grid">
+                            <a href="https://www.linkedin.com/in/tgalvaoferreira/" target="_blank" rel="noreferrer" className="social-card linkedin">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" />
+                                <div className="social-info">
+                                    <h3>LinkedIn</h3>
+                                    <span>Conecte-se profissionalmente</span>
+                                </div>
+                            </a>
+                            <a href="https://github.com/tgalva0" target="_blank" rel="noreferrer" className="social-card github">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" className="github-icon" alt="GitHub" />
+                                <div className="social-info">
+                                    <h3>GitHub</h3>
+                                    <span>Veja meu código fonte</span>
+                                </div>
+                            </a>
+                            <div onClick={handleCopyEmail} className="social-card email" style={{ cursor: 'pointer' }}>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="email-icon">
+                                    <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <rect x="3" y="5" width="18" height="14" rx="2" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
+                                </svg>
+
+                                <div className="social-info">
+                                    <h3>{emailCopied ? "Copiado!" : "Email"}</h3>
+                                    <span>{emailCopied ? "Pronto para colar" : "Clique para copiar"}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <footer className="footer">
+                        <p>© 2026 Thiago Galvão Ferreira. Desenvolvido com React & CSS Puro.</p>
+                    </footer>
+                </div>
             </div>
         </body>
 
