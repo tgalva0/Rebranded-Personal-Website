@@ -7,6 +7,7 @@ function App() {
     const [isHovering, setIsHovering] = useState(false);
     const textRef = useRef(null);
 
+    const [menuOpen, setMenuOpen] = useState(false);
     const handleMouseMove = (e) => {
         const element = e.currentTarget;
         const rect = element.getBoundingClientRect();
@@ -156,7 +157,7 @@ function App() {
     return (
         <body className="App">
             <div>
-                <header className="navbar">
+                <nav className="navbar">
                     <div className="perfil-container">
                         <img src={perfilNavbar} alt="logo" />
                         <h1 cref={textRef}
@@ -165,12 +166,28 @@ function App() {
                             onMouseEnter={() => setIsHovering(true)}
                             onMouseLeave={handleMouseLeave}>Portfólio</h1>
                     </div>
-                    <ul className="nav">
-                        <li className="nav-item"><a href={'#hero'}>Sobre Mim</a></li>
-                        <li className="nav-item"><a href={'#projetos'}>Projetos</a></li>
-                        <li className="nav-item"><a href={'#contato'}>Contato</a></li>
+
+                    <div className="mobile-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+                        {menuOpen ? (
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        ) : (
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        )}
+                    </div>
+
+                    <ul className={`nav ${menuOpen ? 'active' : ''}`}>
+                        <li className="nav-item"><a href="#hero" onClick={() => setMenuOpen(false)}>Sobre Mim</a></li>
+                        <li className="nav-item"><a href="#projetos" onClick={() => setMenuOpen(false)}>Projetos</a></li>
+                        <li className="nav-item"><a href="#contato" onClick={() => setMenuOpen(false)}>Contato</a></li>
                     </ul>
-                </header>
+                </nav>
 
                 <main className="content">
                     <div className="hero-container" id={'hero'}>

@@ -27,6 +27,11 @@ main {
   display: grid;
 }
 
+.mobile-menu-icon {
+  display: none;
+  cursor: pointer;
+}
+
 .navbar::before {
   content: "";
   position: absolute;
@@ -477,7 +482,7 @@ main {
 }
 
 .project-content p {
-  font-family: var(--font-body);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
   color: #f8f0fb;
   line-height: 1.6;
@@ -571,6 +576,7 @@ main {
 }
 
 .contact-text {
+  font-family: 'DM Sans', sans-serif;
   max-width: 600px;
   margin: -1rem auto 3rem auto;
   color: #ccc;
@@ -635,14 +641,13 @@ main {
 }
 
 .social-info h3 {
-  font-family: var(--font-display);
   font-size: 1.2rem;
   color: #fff;
   margin: 0;
 }
 
 .social-info span {
-  font-family: var(--font-body);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8rem;
   color: #aaa;
 }
@@ -709,5 +714,193 @@ main {
 .footer p {
   color: #666;
   font-size: 0.9rem;
-  font-family: var(--font-code);
+  font-family: 'DM Sans', sans-serif;
+}
+
+
+@media (max-width: 900px) {
+
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .content {
+    padding-top: 70px;
+    background-size: cover;
+  }
+
+  .mobile-menu-icon {
+    display: block;
+    z-index: 2000;
+    position: relative;
+  }
+
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: rgba(7, 7, 7, 0);
+    height: 70px;
+  }
+
+  .navbar img,
+  .perfil-container img {
+    display: none !important;
+  }
+
+  .texto-magnetico, .nav-logo {
+    font-size: 1.5rem !important;
+    text-align: left;
+    margin: 0;
+    width: 100%;
+  }
+
+  .texto-magnetico {
+    font-size: 1.5rem !important;
+    width: auto;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    background-color: rgba(7, 7, 7, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1500;
+  }
+
+  .nav.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-item a {
+    font-size: 2rem !important;
+    font-family: "Funnel Display", sans-serif;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    margin: 1rem 0;
+    padding: 0 1.5rem;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .img-container {
+    margin: 0;
+    width: auto;
+    transform: none !important;
+  }
+
+  .profile-image {
+    width: 14rem;
+    height: 14rem;
+    border-radius: 50%;
+    transform: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .big-square, .small-square {
+    display: none !important;
+  }
+
+  .info-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  .info-container h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .info-container h2 {
+    font-size: 1.4rem !important;
+    margin: 0.5rem 0 1.5rem 0 !important;
+  }
+
+  .text-container {
+    display: block !important;
+    position: static;
+    transform: none;
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .text-container p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: justify;
+    color: #ddd;
+  }
+
+  .text-container:hover {
+    transform: none;
+    box-shadow: inset 4px 4px 15px rgba(255, 255, 255, 0.3);
+  }
+
+  .skills-container {
+    margin-top: 3rem;
+    padding: 0 1rem;
+  }
+
+  .skills-title {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-card {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+  }
+
+  .skill-card img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .skill-card span {
+    font-size: 0.75rem;
+  }
+
+  .projects-section, .contact-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .social-card {
+    width: 100%;
+    justify-content: center;
+  }
 }
