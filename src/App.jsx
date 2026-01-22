@@ -160,9 +160,11 @@ function App() {
         <body className="App">
             <div>
                 <nav className="navbar">
-                    <div className="perfil-container">
+                    <div className="glass-effect"></div>
+                    <div className="glass-tint"></div>
+                    <div className="perfil-container" style={{ position: 'relative', zIndex: 10 }}>
                         <img src={perfilNavbar} alt="logo" />
-                        <h1 cref={textRef}
+                        <h1 ref={textRef}
                             className={`texto-magnetico ${isHovering ? 'ativo' : ''}`}
                             onMouseMove={handleMouseMove}
                             onMouseEnter={() => setIsHovering(true)}
@@ -171,20 +173,13 @@ function App() {
 
                     <div className="mobile-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
                         {menuOpen ? (
-                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         ) : (
-                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="3" y1="12" x2="21" y2="12"></line>
-                                <line x1="3" y1="6" x2="21" y2="6"></line>
-                                <line x1="3" y1="18" x2="21" y2="18"></line>
-                            </svg>
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                         )}
                     </div>
 
-                    <ul className={`nav ${menuOpen ? 'active' : ''}`}>
+                    <ul className={`nav ${menuOpen ? 'active' : ''}`} style={{zIndex: 10 }}>
                         <li className="nav-item"><a href="#hero" onClick={() => setMenuOpen(false)}>Sobre Mim</a></li>
                         <li className="nav-item"><a href="#projetos" onClick={() => setMenuOpen(false)}>Projetos</a></li>
                         <li className="nav-item"><a href="#contato" onClick={() => setMenuOpen(false)}>Contato</a></li>
@@ -196,8 +191,16 @@ function App() {
                         <div className="img-container position-relative tilt-effect"
                              onMouseMove={handleImageTilt}
                              onMouseLeave={handleImageReset}>
-                            <div className={'decorative-square big-square'}></div>
-                            <div className={'decorative-square small-square'}></div>
+                            <div className={'decorative-square big-square'}>
+                                <div className="glass-effect"></div>
+                                <div className="glass-tint"></div>
+                                <div className="glass-shine"></div>
+                            </div>
+                            <div className={'decorative-square small-square'}>
+                                <div className="glass-effect"></div>
+                                <div className="glass-tint"></div>
+                                <div className="glass-shine"></div>
+                            </div>
                             <img src={perfil} className={'profile-image'} alt="logo" />
                         </div>
                         <div className="info-container">
@@ -212,7 +215,10 @@ function App() {
                                  onMouseMove={handleMouseMove}
                                  onMouseEnter={() => setIsHovering(true)}
                                  onMouseLeave={handleMouseLeave}>
-                                <p>
+                                <div className="glass-effect"></div>
+                                <div className="glass-tint"></div>
+                                <div className="glass-shine"></div>
+                                <p style={{ position: 'relative', zIndex: 10 }}>
                                     Estudante de Bacharelado em Sistemas de Informação, sou apaixonado por transformar lógica em soluções reais. Atualmente, foco meus estudos no ecossistema <b>Java</b>, desenvolvendo desde aplicações de produtividade pessoal até sistemas complexos de gestão com <b>Spring Boot e Spring Security</b>
                                 </p>
                             </div>
@@ -321,6 +327,22 @@ function App() {
                     </footer>
                 </div>
             </div>
+            <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
+                <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence" />
+                    <feComponentTransfer in="turbulence" result="mapped">
+                        <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+                        <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+                        <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+                    </feComponentTransfer>
+                    <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+                    <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lightingColor="white" result="specLight">
+                        <fePointLight x="-200" y="-200" z="300" />
+                    </feSpecularLighting>
+                    <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
+                    <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+            </svg>
         </body>
 
     )
