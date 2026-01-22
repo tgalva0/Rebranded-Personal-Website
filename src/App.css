@@ -333,7 +333,7 @@ main {
   line-height: 1.6;
   text-align: justify;
   opacity: 1 !important;
-  transform: translateZ(60px) !important;
+  transform: translateZ(60px);
   transition:
           transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
           box-shadow 0.3s ease-in-out,
@@ -342,7 +342,7 @@ main {
 }
 
 .text-container:hover {
-  transform: translate(var(--move-x, 0px), var(--move-y, 0px)) scale(1.02);
+  transform: translate3d(var(--move-x, 0px), var(--move-y, 0px), 60px) scale(1.02);
   box-shadow:
           inset 4px 4px 15px rgba(255, 255, 255, 0.4),
           0 0 15px rgba(0, 212, 255, 0.5),
